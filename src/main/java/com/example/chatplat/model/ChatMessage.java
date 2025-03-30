@@ -35,7 +35,6 @@ public class ChatMessage {
         this.timestamp = LocalDateTime.now();
     }
 
-    // ✅ Getters & Setters
     public Long getId() { return id; }
     public String getSender() { return sender; }
     public String getReceiver() { return receiver; }

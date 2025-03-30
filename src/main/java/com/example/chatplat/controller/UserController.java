@@ -1,9 +1,8 @@
 package com.example.chatplat.controller;
 
-import com.example.chatplat.model.User;
 import com.example.chatplat.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -14,22 +13,23 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
-    @GetMapping("/{id}")
-    public User getUserWithId(@PathVariable long id) {
-        return userService.getUserById(id);
+    // Get username by ID
+    @GetMapping("/{userId}/username")
+    public ResponseEntity<String> getUsername(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.getUsernameById(userId));
     }
 
-    @PostMapping
-    public void createUser(@RequestBody User user) {
-        userService.saveUser(user);
+    // Get ID by username
+    @GetMapping("/by-username/{username}")
+    public ResponseEntity<Long> getUserId(@PathVariable String username) {
+        return ResponseEntity.ok(userService.getUserIdByUsername(username));
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUserById(id);
+    // Check username availability
+    @GetMapping("/check-username/{username}")
+    public ResponseEntity<Boolean> checkUsername(@PathVariable String username) {
+        return ResponseEntity.ok(!userService.usernameExists(username));
     }
+
+    // ... keep your existing endpoints ...
 }
